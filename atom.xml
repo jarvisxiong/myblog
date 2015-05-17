@@ -4,7 +4,7 @@
   <title><![CDATA[Jarvisxiong Blog]]></title>
   <link href="http://jarvisxiong.github.io/myblog/atom.xml" rel="self"/>
   <link href="http://jarvisxiong.github.io/myblog/"/>
-  <updated>2015-05-17T19:00:56+08:00</updated>
+  <updated>2015-05-17T19:02:53+08:00</updated>
   <id>http://jarvisxiong.github.io/myblog/</id>
   <author>
     <name><![CDATA[jarvisxiong]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[vim study]]></title>
+    <title type="html"><![CDATA[linux vim学习]]></title>
     <link href="http://jarvisxiong.github.io/myblog/blog/2015/05/17/vim-study/"/>
     <updated>2015-05-17T18:58:58+08:00</updated>
     <id>http://jarvisxiong.github.io/myblog/blog/2015/05/17/vim-study</id>
