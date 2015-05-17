@@ -46,8 +46,10 @@
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Jarvisxiong Blog" type="application/atom+xml">
   
-  <meta name="description" content="
-">
+  <meta name="description" content="linux 操作杂谈 本篇文章是在linux上学习新语法的时候，最linux的一些操作 一般的命令都会有 &ndash;help
+创建层级目录 mkdir -p examples/base
+查看文件的类型格式 file base.text
+linux主机域名 hostsname vim /etc/ &hellip;">
 <meta name="keywords" content="seo, octopress, java, javascript,开发">
   
 
@@ -94,6 +96,89 @@
     <div class="row-fluid">
       <div class="span9">
   
+  
+  
+    <article>
+      
+  <header class="page-header">
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/17/vim-study/">Vim Study</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-17T18:58:58+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:58 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>linux 操作杂谈</h1>
+
+<p>   本篇文章是在linux上学习新语法的时候，最linux的一些操作</p>
+
+<ul>
+<li>一般的命令都会有  &ndash;help</li>
+<li>创建层级目录  mkdir -p  examples/base</li>
+<li>查看文件的类型格式   file  base.text</li>
+<li>linux主机域名   hostsname  vim /etc/hosts</li>
+</ul>
+
+
+<h1>vim常用操作</h1>
+
+<h3>1. 各种插入模式</h3>
+
+<pre><code>a → 在光标后插入
+o → 在当前行后插入一个新行
+O → 在当前行前插入一个新行
+cw → 替换从光标所在位置后到一个单词结尾的字符
+</code></pre>
+
+<h3>2.简单的光标移动</h3>
+
+<pre><code>0 → 数字零，到行头
+^ → 到本行第一个不是blank字符的位置（所谓blank字符就是空格，tab，换行，回车等）
+$ → 到本行行尾
+g_ → 到本行最后一个不是blank字符的位置。
+/pattern → 搜索 pattern 的字符串（陈皓注：如果搜索出多个匹配，可按n键到下一个）
+</code></pre>
+
+<h3>3.拷贝/粘贴</h3>
+
+<pre><code>（p/P都可以，p是表示在当前位置之后，P表示在当前位置之前）
+ P → 粘贴
+ yy → 拷贝当前行当行于 ddP
+</code></pre>
+
+<h3>4.Undo/Redo</h3>
+
+<pre><code> u → undo
+&lt;C-r&gt; → redo
+</code></pre>
+
+<h3>5.打开/保存/退出/改变文件(Buffer)</h3>
+
+<pre><code>:e &lt;path/to/file&gt; → 打开一个文件
+:w → 存盘
+:saveas &lt;path/to/file&gt; → 另存为 &lt;path/to/file&gt;
+:x， ZZ 或 :wq → 保存并退出 (:x 表示仅在需要时保存，ZZ不需要输入冒号并回车)
+:q! → 退出不保存 :qa! 强行退出所有的正在编辑的文件，就算别的文件有更改。
+:bn 和 :bp → 你可以同时打开很多文件，使用这两个命令来切换下一个或上一个文件。（陈皓注：我喜欢使用:n到下一个文件）
+</code></pre>
+
+<h3>更多功能请参考<a href="http://coolshell.cn/articles/5426.html" target="_blank"> [ 简明 Vim 练级攻略 ]</h3>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -203,6 +288,10 @@
     <section class="well">
   <ul id="recent_posts" class="nav nav-list">
     <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2015/05/17/vim-study/">vim study</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/17/testpost/">中文</a>
