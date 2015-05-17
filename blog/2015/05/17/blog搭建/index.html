@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>first-blog - Jarvisxiong Blog</title>
+  <title>blog搭建 - Jarvisxiong Blog</title>
   <meta name="author" content="jarvisxiong">
 
   
@@ -46,8 +46,8 @@
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Jarvisxiong Blog" type="application/atom+xml">
   
-  <meta name="description" content="参考 1.灵魂机器 2.YouSharpe 3.http://www.v2ex.com/t/136903 未解决的问题 安装规定的步骤执行source不知道怎上传
-">
+  <meta name="description" content="octopress博客搭建和个性化配置 A1c120da1e76 grunmin 2013.12.25 11:25* 1621 字 2459 次阅读
+使用octopress搭建博客的人，大概都会喜欢写关于如何搭建配置octopress的文章。因为它的高定制性，为极客们带来很多乐趣。从首页的配置， &hellip;">
 
   
 
@@ -98,7 +98,7 @@
   
   <header class="page-header">
     
-      <h1 class="entry-title">First-blog</h1>
+      <h1 class="entry-title">Blog搭建</h1>
     
     
       <p class="meta">
@@ -114,11 +114,234 @@
   </header>
 
 
-<div class="entry-content"><h3>参考</h3>
+<div class="entry-content"><p>octopress博客搭建和个性化配置
+ A1c120da1e76 grunmin 2013.12.25 11:25* 1621 字 2459 次阅读
+使用octopress搭建博客的人，大概都会喜欢写关于如何搭建配置octopress的文章。因为它的高定制性，为极客们带来很多乐趣。从首页的配置，到分类，评论，个人信息，社会化分享等的配置，内容繁多。而且这是我第二次搭建octopress环境了，发现上一次的配置有一部分不能clone到本机上。因此，把配置的过程记录下来是十分有必要的。
+我的意愿是记录配置的过程，顺便整理大牛们关于这方面的一些说明。网络上相关资料有很多，没有实践过的没有摘录在这里。所有的代码实现都是直接引用前辈们的。另外，本博的配置环境是linux fedora 18.</p>
 
-<p>1.<a href="http://cn.soulmachine.me//blog/20130401/">灵魂机器</a></p>
+<p>octopress官方网站
+octopress的配置都可以在官网上找到。事实上，遇到问题查询官网文档是最有效率的方法。</p>
 
-<p>2.<a href="http://nkcoder.github.io/blog/20140105/github-pages-and-octopress-blog-built/">YouSharpe</a></p>
+<p>github的设置
+创建仓库
+登陆github网站，注册一个用户，假设为grunmin。
+创建一个仓库，命名为username.github.com，例如grunmin.github.com</p>
+
+<p>使用密钥登陆github
+[[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa     #生成密钥对
+按默认一直确认即可。
+在github帐号设置里找到ssh的设置，添加一个ssh key。
+进入~/.ssh/找到id_rsa.pub文件，把里面的内容填到key里，title不填。
+这样做的好处是之后push到仓库上时可以不用输入密码。</p>
+
+<h3>安装ruby</h3>
+
+<p>查看ruby版本</p>
+
+<pre><code>ruby --version  # 必须显示1.9.3
+</code></pre>
+
+<p>安装方法：</p>
+
+<pre><code>curl -L https://get.rvm.io | bash -s stable --ruby
+rvm install 1.9.3
+rvm use 1.9.3
+rvm rubygems latest
+</code></pre>
+
+<p>若有显示命名未找到，直接下载安装即可。</p>
+
+<h3>安装octopress</h3>
+
+<p>在安装octopress之前，确保已安装git。</p>
+
+<pre><code>git clone git://github.com/imathis/octopress.git octopress
+cd octopress
+gem install bundler
+bundle install
+rake install
+</code></pre>
+
+<p>这里容易出现三个问题：
+1、已安装rvm和bundler，但显示找不到命令。</p>
+
+<p>用绝对路径：/home/username/.rvm/bin/rvm
+    /home/username/.rvm/bin/bundler
+2、执行bundler install时显示：GemfileNotFound error?</p>
+
+<p>可能在安装的过程中退出了octopress目录，进入后执行即可。
+3、执行rake install时显示</p>
+
+<pre><code>rake aborted!
+No Rakefile found (looking for: rakefile, Rakefile, rakefile.rb, Rakefile.rb)
+</code></pre>
+
+<p>同理，进入安装目录即可。</p>
+
+<p>将博客部署到github上
+    rake setup_github_pages
+此时会要求输入仓库的url，可以在github仓库内容业的右下角找到。
+例如我的是git@github.com:grunmin/grunmin.github.com.git
+成功后即可用</p>
+
+<pre><code>rake new_post["title"]
+</code></pre>
+
+<p>生成新文章，文章在source/_post/目录下，文件名构成为时间和标题的拼音。之后执行</p>
+
+<pre><code>rake generate
+rake preview
+</code></pre>
+
+<p>此时可以预览(浏览器打开localhost:4000可看到效果。）如果没有问题，则执行</p>
+
+<pre><code>rake deploy 
+git add .
+git commit -m "comment"
+git push origin source
+</code></pre>
+
+<p>保存到仓库。
+需要注意的是执行git命令时应处于octopress目录，并且checkout到source分支，</p>
+
+<pre><code>cd octopress
+git checkout source
+git add .
+git commit -m "comment"
+git push origin souce
+</code></pre>
+
+<h3>octopress博客的个性化配置</h3>
+
+<p>添加文章分类（category)</p>
+
+<h4>1、增加category_list插件</h4>
+
+<p>将下面的代码写到plugins/category_list_tag.rb</p>
+
+<p>module Jekyll
+  class CategoryListTag &lt; Liquid::Tag
+    def render(context)
+      html = &ldquo;&rdquo;
+      categories = context.registers[:site].categories.keys
+      categories.sort.each do |category|
+        posts_in_category = context.registers[:site].categories[category].size
+        category_dir = context.registers[:site].config[&lsquo;category_dir&rsquo;]
+        category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, &lsquo;-&rsquo;).gsub(/-{2,}/, &lsquo;-&rsquo;).downcase)
+        html &lt;&lt; &ldquo;<li class='category'><a href='/#{category_url}/'>#{category} (#{posts_in_category})</a></li>\n&rdquo;
+      end
+      html
+    end
+  end
+end</p>
+
+<p>Liquid::Template.register_tag(&lsquo;category_list&rsquo;, Jekyll::CategoryListTag)</p>
+
+<h4>2、增加侧边栏</h4>
+
+<p>将下面的代码写到source/_includes/asides/category_list.html</p>
+
+<pre><code>&lt;section&gt;
+  &lt;h1&gt;Categories&lt;/h1&gt;
+    &lt;ul id="categories"&gt;
+      {% category_list %} 
+    &lt;/ul&gt;
+&lt;/section&gt;
+</code></pre>
+
+<p>修改_config.yml文件，找到default_asides:
+在中括号内添加
+asides/category_list.html</p>
+
+<p>添加的位置决定在页面显示的位置，注意用逗号隔开。
+用vim编辑器粘贴的话可能会自动缩进，启用粘贴模式或用其他编辑器即可。</p>
+
+<p>添加社会化评论
+octopress 产生静态网页，不支持评论功能，所以我们用第三方评论系统。好消息是octopress已为我们配置好了Disqus，我们只需要稍微填写以下信息即可。
+1、首先在Disqus 注册一个帐号，点击添加到我的网页，添加站点信息，比如我的grunmin.github.io
+2、修改_config.yml文件，找到这一段：</p>
+
+<h1>Disqus Comments</h1>
+
+<p>disqus_short_name:
+disqus_show_comment_count: false
+添加你的disqus用户名，并把false修改成true即可。注意冒号后面有空格。
+此外，可以用国内的多说系统，速度较快，且比较符合景德镇村民的需要。之前我用的就是这个，但是没有记录配置过程，这次克隆时多说系统没有成功启动，因此不折腾了，有需要的话可以自行谷歌。</p>
+
+<p>导航栏设置
+导航栏的设置在source_includes\custom\navigation.html
+我们可以将Blog和Archives修改为首页和归档，也可以在此添加一个标签页，此时应使用命令rake new_page[&lsquo;about&rsquo;]创建一个页面，页面路径为source\about\index.markdown;
+修改后的文件如下：</p>
+
+<pre><code>&lt;ul class="main-navigation"&gt; 
+    &lt;li&gt;&lt;a href="/"&gt;首页&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href="/blog/archives"&gt;归档&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href="/about"&gt;关于&lt;/a&gt;&lt;/li&gt; 
+&lt;/ul&gt;
+</code></pre>
+
+<p>从新电脑上恢复博客内容：
+如果电脑重装了系统，或者要在另一台电脑编写博客，可以这样设置。
+找到博客仓库的url，执行</p>
+
+<pre><code>git clone -b source (url) octopress   #把source 克隆到本地octopress目录上
+cd octopress
+git clone (url) _deploy   #克隆master分支，它存放着博客内容。
+gem install bundler
+bundle install
+rake install
+rake setup_github_pages
+</code></pre>
+
+<p>之后操作同上，有问题照葫芦画瓢。</p>
+
+<p>其他问题
+如果不能生成或者推送博客了，可以采取下述措施：</p>
+
+<p>在命令行输入/bin/bash &ndash;login，重试
+查看ruby的版本，如果不是1.9.3的话，执行rvm use 1.9.3</p>
+
+<h3>Ocotpress博客配置</h3>
+
+<p>更改下面的配置后，还需要运行 rake generate、rake deploy等等命令的。</p>
+
+<p>创建一个新的页面也与此类似，命令是：</p>
+
+<pre><code>rake new_page[super-awesome]
+rake new_post[super-awesome] /发表日志
+</code></pre>
+
+<p>1、默认的博客运行成功的话，就需要按照自己的要求对博客配置进行修改了，主要是修改Octopress根目录下的主配置文件_config.yml。</p>
+
+<pre><code>url:  http://username.github.com                 # 博客地址
+title:  蔓草札记                                            # 博客标题
+subtitle:  感受生活，感悟工作，感触心灵           # 副标题
+author:  xhhjin                                                       # 作者  
+simple_search:  http://www.google.com.hk/search     # 搜索引擎
+description:                                                            # 关于博客的描述
+subscribe_rss:  /atom.xml                  # Rss订阅地址, 默认是  /atom.xml
+subscribe_email:                               # 提供Email订阅的地址
+email:                                              # Rss订阅的Email地址
+root:  /               # 博客路径，默认是“/“，如果你打算在子目录中，记得修改这个路径
+permalink: /blog/:year/:month/:day/:title/           # 文章的固定链接形式
+</code></pre>
+
+<p>2、更换主题</p>
+
+<p>主题位于 octopress/.theme 目录下，默认主题为 classic。 如果需要更改主题（可在网上查找），下载后将主题也放在.theme目录下即可，如果主题名字为blog_theme，那么安装主题时输入以下命令即可：</p>
+
+<pre><code>rake install [‘blog_theme’]
+</code></pre>
+
+<h3>绑定域名</h3>
+
+<p>Github Pages绑定域名的方法有点特殊，需要在Octopress/source目录下建个无后缀的CNAME文本文件，文件内容就是你的域名，例如github.xuhehuan.com，然后修改A纪录到207.97.227.245 ，或者 CNAME 指向 username.github.com，下面就等着解析生效了。</p>
+
+<h3>参考</h3>
+
+<p>1.<a href="http://cn.soulmachine.me//blog/20130401/">http://cn.soulmachine.me//blog/20130401/</a></p>
+
+<p>2.<a href="http://nkcoder.github.io/blog/20140105/github-pages-and-octopress-blog-built">http://nkcoder.github.io/blog/20140105/github-pages-and-octopress-blog-built</a></p>
 
 <p>3.<a href="http://www.v2ex.com/t/136903">http://www.v2ex.com/t/136903</a></p>
 
@@ -196,15 +419,11 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2015/05/17/testpost/">中文</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2015/05/17/about/">about</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2015/05/17/blog%E6%90%AD%E5%BB%BA/">first-blog</a>
+        <a href="/blog/2015/05/17/blog%E6%90%AD%E5%BB%BA/">blog搭建</a>
       </li>
     
   </ul>
