@@ -51,6 +51,8 @@
 查看文件的类型格式 file base.text
 linux主机域名 hostsname vim /etc/ &hellip;">
 <meta name="keywords" content="seo, octopress, java, javascript,开发">
+
+
   
 
 </head>
@@ -502,7 +504,7 @@ permalink: /blog/:year/:month/:day/:title/           # 文章的固定链接形�
 
 
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
+<h1>java工程师<!-- <abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr> --></h1>
 <a href="http://jarvisxiong.github.io/myblog/index.html"><!-- <img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://jarvisxiong.github.io/myblog/index.html" alt="post-qrcode"> -->
 <img src="/images/wechat.png"></a>
 </section>
@@ -531,7 +533,50 @@ permalink: /blog/:year/:month/:day/:title/           # 文章的固定链接形�
 	</script>
 
 </p>
+<script type="text/javascript">
+$(document).ready(function(){
+  // hide #back-top first
+  $(".return").hide();
+  // fade in #back-top
+  $(function () {
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('.return').fadeIn();
+        } else {
+            $('.return').fadeOut();
+        }
+    });
+    // scroll body to 0px on click
+    $('.return').click(function () {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 800);
+        return false;
+    });
+  });
 
+});
+</script>
+<style type="text/css">
+.return {
+	display: block;
+	width: 50px;
+	height: 50px;
+	position: relative;
+	cursor: pointer;
+	font-size: 12px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	position: fixed;
+	_position: absolute;
+	right: 50px;
+	bottom: 50px;
+	background: url("../../images/return_bg.png") no-repeat 0 -50px;
+	}
+
+</style>
+<div class="return" title="返回顶部" style="display: block;"></div>
 </footer>
   
 
