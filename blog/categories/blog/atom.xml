@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Cuckoo's  Blog]]></title>
-  <link href="http://jarvisxiong.github.io/myblog/atom.xml" rel="self"/>
+  <title><![CDATA[Category: blog | Cuckoo's  Blog]]></title>
+  <link href="http://jarvisxiong.github.io/myblog/blog/categories/blog/atom.xml" rel="self"/>
   <link href="http://jarvisxiong.github.io/myblog/"/>
   <updated>2015-05-18T22:35:52+08:00</updated>
   <id>http://jarvisxiong.github.io/myblog/</id>
@@ -12,109 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[markdown-pad]]></title>
-    <link href="http://jarvisxiong.github.io/myblog/blog/2015/05/18/markdown-pad/"/>
-    <updated>2015-05-18T22:02:47+08:00</updated>
-    <id>http://jarvisxiong.github.io/myblog/blog/2015/05/18/markdown-pad</id>
-    <content type="html"><![CDATA[<h2>Welcome to MarkdownPad 2</h2>
-
-<p><strong>MarkdownPad</strong> is a full-featured Markdown editor for Windows.</p>
-
-<h3>Built exclusively for Markdown</h3>
-
-<p>Enjoy first-class Markdown support with easy access to  Markdown syntax and convenient keyboard shortcuts.</p>
-
-<p>Give them a try:</p>
-
-<ul>
-<li><strong>Bold</strong> (<code>Ctrl+B</code>) and <em>Italic</em> (<code>Ctrl+I</code>)</li>
-<li>Quotes (<code>Ctrl+Q</code>)</li>
-<li>Code blocks (<code>Ctrl+K</code>)</li>
-<li>Headings 1, 2, 3 (<code>Ctrl+1</code>, <code>Ctrl+2</code>, <code>Ctrl+3</code>)</li>
-<li>Lists (<code>Ctrl+U</code> and <code>Ctrl+Shift+O</code>)</li>
-</ul>
-
-
-<h3>See your changes instantly with LivePreview</h3>
-
-<p>Don&rsquo;t guess if your <a href="http://markdownpad.com">hyperlink syntax</a> is correct; LivePreview will show you exactly what your document looks like every time you press a key.</p>
-
-<h3>Make it your own</h3>
-
-<p>Fonts, color schemes, layouts and stylesheets are all 100% customizable so you can turn MarkdownPad into your perfect editor.</p>
-
-<h3>A robust editor for advanced Markdown users</h3>
-
-<p>MarkdownPad supports multiple Markdown processing engines, including standard Markdown, Markdown Extra (with Table support) and GitHub Flavored Markdown.</p>
-
-<p>With a tabbed document interface, PDF export, a built-in image uploader, session management, spell check, auto-save, syntax highlighting and a built-in CSS management interface, there&rsquo;s no limit to what you can do with MarkdownPad.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[linux vim学习]]></title>
-    <link href="http://jarvisxiong.github.io/myblog/blog/2015/05/17/vim-study/"/>
-    <updated>2015-05-17T18:58:58+08:00</updated>
-    <id>http://jarvisxiong.github.io/myblog/blog/2015/05/17/vim-study</id>
-    <content type="html"><![CDATA[<h1>linux 操作杂谈</h1>
-
-<p>   本篇文章是在linux上学习新语法的时候，最linux的一些操作</p>
-
-<ul>
-<li>一般的命令都会有  &ndash;help</li>
-<li>创建层级目录  mkdir -p  examples/base</li>
-<li>查看文件的类型格式   file  base.text</li>
-<li>linux主机域名   hostsname  vim /etc/hosts</li>
-</ul>
-
-
-<h1>vim常用操作</h1>
-
-<h3>1. 各种插入模式</h3>
-
-<pre><code>a → 在光标后插入
-o → 在当前行后插入一个新行
-O → 在当前行前插入一个新行
-cw → 替换从光标所在位置后到一个单词结尾的字符
-</code></pre>
-
-<h3>2.简单的光标移动</h3>
-
-<pre><code>0 → 数字零，到行头
-^ → 到本行第一个不是blank字符的位置（所谓blank字符就是空格，tab，换行，回车等）
-$ → 到本行行尾
-g_ → 到本行最后一个不是blank字符的位置。
-/pattern → 搜索 pattern 的字符串（陈皓注：如果搜索出多个匹配，可按n键到下一个）
-</code></pre>
-
-<h3>3.拷贝/粘贴</h3>
-
-<pre><code>（p/P都可以，p是表示在当前位置之后，P表示在当前位置之前）
- P → 粘贴
- yy → 拷贝当前行当行于 ddP
-</code></pre>
-
-<h3>4.Undo/Redo</h3>
-
-<pre><code> u → undo
-&lt;C-r&gt; → redo
-</code></pre>
-
-<h3>5.打开/保存/退出/改变文件(Buffer)</h3>
-
-<pre><code>:e &lt;path/to/file&gt; → 打开一个文件
-:w → 存盘
-:saveas &lt;path/to/file&gt; → 另存为 &lt;path/to/file&gt;
-:x， ZZ 或 :wq → 保存并退出 (:x 表示仅在需要时保存，ZZ不需要输入冒号并回车)
-:q! → 退出不保存 :qa! 强行退出所有的正在编辑的文件，就算别的文件有更改。
-:bn 和 :bp → 你可以同时打开很多文件，使用这两个命令来切换下一个或上一个文件。（陈皓注：我喜欢使用:n到下一个文件）
-</code></pre>
-
-<h3>更多功能请参考<a href="http://coolshell.cn/articles/5426.html" target="_blank"> [ 简明 Vim 练级攻略 ]</h3>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[blog搭建]]></title>
@@ -281,9 +178,9 @@ disqus_show_comment_count: false
 修改后的文件如下：</p>
 
 <pre><code>&lt;ul class="main-navigation"&gt; 
-    &lt;li&gt;&lt;a href="http://jarvisxiong.github.io/myblog/"&gt;首页&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href="/"&gt;首页&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href="/blog/archives"&gt;归档&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href="http://jarvisxiong.github.io/myblog/about"&gt;关于&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href="/about"&gt;关于&lt;/a&gt;&lt;/li&gt; 
 &lt;/ul&gt;
 </code></pre>
 
