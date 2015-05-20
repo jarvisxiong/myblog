@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cache | Cuckoo's  Blog]]></title>
+  <link href="http://jarvisxiong.github.io/myblog/blog/categories/cache/atom.xml" rel="self"/>
+  <link href="http://jarvisxiong.github.io/myblog/"/>
+  <updated>2015-05-20T22:43:46+08:00</updated>
+  <id>http://jarvisxiong.github.io/myblog/</id>
+  <author>
+    <name><![CDATA[jarvisxiong]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[cache]]></title>
+    <link href="http://jarvisxiong.github.io/myblog/blog/2015/05/20/cache/"/>
+    <updated>2015-05-20T22:39:43+08:00</updated>
+    <id>http://jarvisxiong.github.io/myblog/blog/2015/05/20/cache</id>
+    <content type="html"><![CDATA[<h3>用Memcached，对于缓存对象大小有要求，单个对象不得大于1MB，且不支持复杂的数据类型，譬如SET等。基于这些限制，有必要考虑Redis！</h3>
+
+<pre><code>http://blog.csdn.net/it_man/article/details/9730605
+http://www.cnblogs.com/edisonfeng/p/3571870.html
+http://www.xdata.me/?p=262
+http://www.infoq.com/cn/articles/tq-why-choose-redis
+http://www.oschina.net/question/259434_50355?sort=time
+http://blog.csdn.net/colorant/article/details/21089057
+http://blog.csdn.net/hguisu/article/details/8836819
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
