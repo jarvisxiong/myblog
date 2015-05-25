@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | Cuckoo's  Blog]]></title>
   <link href="http://jarvisxiong.github.io/myblog/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://jarvisxiong.github.io/myblog/"/>
-  <updated>2015-05-25T21:17:51+08:00</updated>
+  <updated>2015-05-25T21:53:51+08:00</updated>
   <id>http://jarvisxiong.github.io/myblog/</id>
   <author>
     <name><![CDATA[jarvisxiong]]></name>
@@ -79,6 +79,41 @@ System.out.println(l1==k1);//false
     System.out.println(i1==i2);//false
   }
 }</p>
+
+<pre><code>    String a = "a";
+    String b = "b";
+    String d = "a"+"b";
+    String c = "ab";
+    String f = a+b;
+    System.out.println(c==d);
+    System.out.println(f==d);
+    System.out.println(f==c);
+</code></pre>
+
+<p>从上面的结果中我们不难看出，只有使用引号包含文本的方式创建的String对象之间使用“+”连接产生的新对象才会被加入字符串池中。对于所有包含new方式新建对象（包括null）的“+”连接表达式，它所产生的新对象都不会被加入字符串池中。</p>
+
+<p>但是有一种情况需要引起我们的注意。请看下面的代码：  Java代码</p>
+
+<pre><code>     // 常量A 
+     public static final String A = "ab";   
+     // 常量B 
+     public static final String B = "cd";   
+     public static void main(String[] args) {
+    // 将两个常量用+连接对s进行初始化 
+     String s = A + B;  
+     String t = "abcd";
+     if (s == t) { 
+        System.out.println("s等于t，它们是同一个对象");  
+     }else {
+       System.out.println("s不等于t，它们不是同一个对象");   
+    ｝
+</code></pre>
+
+<p> 这段代码的运行结果如下：     s等于t，它们是同一个对象     这又是为什么呢？原因是这样的，对于常量来讲，它的值是固定的，因此在编译期就能被确定了，而变量的值只有到运行时才能被确定，因为这个变量可以被不同的方法调用，从而可能引起值的改变。在上面的例子中，A和B都是常量，值是固定的，因此s的值也是固定的，它在类被编译时就已经确定了。也就是说：  Java代码
+   1. String s=A+B;     等同于：  Java代码
+   1. String s=&ldquo;ab&rdquo;+&ldquo;cd&rdquo;;</p>
+
+<p><a href="http://wenku.baidu.com/link?url=F8_SDJwO1fgu2BDQ6yAWJRciQtKhRlrqQ9H8N1oZzLg_jB_pfIZ6ZZbkNuUSJEraOTYo8cULayM27Slrk02lS7l9GCLrI29FxezjyC6smJi">http://wenku.baidu.com/link?url=F8_SDJwO1fgu2BDQ6yAWJRciQtKhRlrqQ9H8N1oZzLg_jB_pfIZ6ZZbkNuUSJEraOTYo8cULayM27Slrk02lS7l9GCLrI29FxezjyC6smJi</a></p>
 ]]></content>
   </entry>
   
