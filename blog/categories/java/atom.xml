@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java | Cuckoo's  Blog]]></title>
+  <link href="http://jarvisxiong.github.io/myblog/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://jarvisxiong.github.io/myblog/"/>
+  <updated>2015-05-25T21:17:51+08:00</updated>
+  <id>http://jarvisxiong.github.io/myblog/</id>
+  <author>
+    <name><![CDATA[jarvisxiong]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[java String内存分析]]></title>
+    <link href="http://jarvisxiong.github.io/myblog/blog/2015/05/25/java-string-model/"/>
+    <updated>2015-05-25T21:05:49+08:00</updated>
+    <id>http://jarvisxiong.github.io/myblog/blog/2015/05/25/java-string-model</id>
+    <content type="html"><![CDATA[<h2>Java中内存分析：</h2>
+
+<h5>栈(Stack) ：存放基本类型的变量数据和对象的引用，但对象本身不存放在栈中，而是存放在（new 出来的对象）或者常量池中（字符串常量对象存放在常量池中）。</h5>
+
+<h5>堆(heap)：存放所有new出来的对象。</h5>
+
+<h5>常量池(constant pool)：在堆中分配出来的一块存储区域，存放储显式的String常量和基本类型常量(float、int等)。另外，可以存储不经常改变的东西(public static final)。常量池中的数据可以共享。</h5>
+
+<h5>静态存储：存放静态成员（static定义的）。</h5>
+
+<p><img src="http://pic002.cnblogs.com/images/2012/267603/2012012520033341.png" alt="" /></p>
+
+<p>1)String a = &ldquo;abc&rdquo;;①
+String b = &ldquo;abc&rdquo;;②
+　　  分析：
+　　  ①代码执行后在常量池(constant pool)中创建了一个值为abc的String对象，②执行时，因为常量池中存在"abc"所以就不再创建新的String对象了。</p>
+
+<p>2)String   c   =   new   String(&ldquo;xyz&rdquo;);①
+　　String   d   =   new   String(&ldquo;xyz&rdquo;);②
+　　分析：①Class被加载时，"xyz"被作为常量读入，在常量池(constant pool)里创建了一个共享的值为"xyz"的String对象；然后当调用到new String(&ldquo;xyz&rdquo;)的时候，会在堆(heap)里创建这个new   String(&ldquo;xyz&rdquo;)对象;②由于常量池(constant pool)中存在"xyz"所以不再创建"xyz"，然后创建新的new String(&ldquo;xyz&rdquo;)。</p>
+
+<p>3)String   s1   =   new   String(&ldquo;xyz&rdquo;);     //创建二个对象(常量池和栈中)，一个引用
+　　String   s2   =   new   String(&ldquo;xyz&rdquo;);     //创建一个对象(栈中)，并且以后每执行一次创建一个对象，一个引用</p>
+
+<p>　　String   s3   =   &ldquo;xyz&rdquo;;     //创建一个对象(常量池中)，一个引用 <br/>
+　　String   s4   =   &ldquo;xyz&rdquo;;     //不创建对象(共享上次常量池中的数据)，只是创建一个新的引用
+4)</p>
+
+<p>public class TestStr {
+  public static void main(String[] args) {
+    // 以下两条语句创建了1个对象。"凤山"存储在字符串常量池中
+    String str1 = &ldquo;凤山&rdquo;;
+    String str2 = &ldquo;凤山&rdquo;;
+    System.out.println(str1==str2);//true</p>
+
+<pre><code>//以下两条语句创建了3个对象。"天峨"，存储在字符串常量池中，两个new String()对象存储在堆内存中 
+String str3 = new String("天峨"); 
+String str4 = new String("天峨"); 
+System.out.println(str3==str4);//false 
+
+//以下两条语句创建了1个对象。9是存储在栈内存中 
+int i = 9; 
+int j = 9; 
+System.out.println(i==j);//true 
+
+//由于没有了装箱，以下两条语句创建了2个对象。两个1对象存储在堆内存中 
+Integer l1 = new Integer(1); 
+Integer k1 = new Integer(1); 
+System.out.println(l1==k1);//false 
+</code></pre>
+
+<p>　　//以下两条语句创建了1个对象。1对象存储在栈内存中。自动装箱时对于值从127之间的值，使用一个实例。
+    Integer l = 20;//装箱
+    Integer k = 20;//装箱
+    System.out.println(l==k);//true
+//以下两条语句创建了2个对象。i1,i2变量存储在栈内存中，两个256对象存储在堆内存中
+    Integer i1 = 256;
+    Integer i2 = 256;
+    System.out.println(i1==i2);//false
+  }
+}</p>
+]]></content>
+  </entry>
+  
+</feed>

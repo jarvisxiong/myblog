@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>markdown-pad - Cuckoo's  Blog</title>
+  <title>java String内存分析 - Cuckoo's  Blog</title>
   <meta name="author" content="jarvisxiong">
 
   
-  <meta name="description" content="markdown edit">
+  <meta name="description" content="">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jarvisxiong.github.io/myblog/blog/2015/05/18/markdown-pad">
+  <link rel="canonical" href="http://jarvisxiong.github.io/myblog/blog/2015/05/25/java-string-model">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -46,7 +46,7 @@
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Cuckoo's  Blog" type="application/atom+xml">
   
-  <meta name="description" content="markdown edit">
+  <meta name="description" content="Java中内存分析： 栈(Stack) ：存放基本类型的变量数据和对象的引用，但对象本身不存放在栈中，而是存放在（new 出来的对象）或者常量池中（字符串常量对象存放在常量池中）。 堆(heap)：存放所有new出来的对象。 常量池(constant pool)：在堆中分配出来的一块存储区域， &hellip;">
 
 
 
@@ -110,7 +110,7 @@
   
   <header class="page-header">
     
-      <h1 class="entry-title">Markdown-pad</h1>
+      <h1 class="entry-title">Java String内存分析</h1>
     
     
       <p class="meta">
@@ -119,45 +119,74 @@
 
 
 
-<time class='entry-date' datetime='2015-05-18T22:02:47+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:02 pm</span></time>
+<time class='entry-date' datetime='2015-05-25T21:05:49+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:05 pm</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>Welcome to MarkdownPad 2</h2>
+<div class="entry-content"><h2>Java中内存分析：</h2>
 
-<p><strong>MarkdownPad</strong> is a full-featured Markdown editor for Windows.</p>
+<h5>栈(Stack) ：存放基本类型的变量数据和对象的引用，但对象本身不存放在栈中，而是存放在（new 出来的对象）或者常量池中（字符串常量对象存放在常量池中）。</h5>
 
-<h3>Built exclusively for Markdown</h3>
+<h5>堆(heap)：存放所有new出来的对象。</h5>
 
-<p>Enjoy first-class Markdown support with easy access to  Markdown syntax and convenient keyboard shortcuts.</p>
+<h5>常量池(constant pool)：在堆中分配出来的一块存储区域，存放储显式的String常量和基本类型常量(float、int等)。另外，可以存储不经常改变的东西(public static final)。常量池中的数据可以共享。</h5>
 
-<p>Give them a try:</p>
+<h5>静态存储：存放静态成员（static定义的）。</h5>
 
-<ul>
-<li><strong>Bold</strong> (<code>Ctrl+B</code>) and <em>Italic</em> (<code>Ctrl+I</code>)</li>
-<li>Quotes (<code>Ctrl+Q</code>)</li>
-<li>Code blocks (<code>Ctrl+K</code>)</li>
-<li>Headings 1, 2, 3 (<code>Ctrl+1</code>, <code>Ctrl+2</code>, <code>Ctrl+3</code>)</li>
-<li>Lists (<code>Ctrl+U</code> and <code>Ctrl+Shift+O</code>)</li>
-</ul>
+<p><img src="http://pic002.cnblogs.com/images/2012/267603/2012012520033341.png" alt="" /></p>
 
+<p>1)String a = &ldquo;abc&rdquo;;①
+String b = &ldquo;abc&rdquo;;②
+　　  分析：
+　　  ①代码执行后在常量池(constant pool)中创建了一个值为abc的String对象，②执行时，因为常量池中存在"abc"所以就不再创建新的String对象了。</p>
 
-<h3>See your changes instantly with LivePreview</h3>
+<p>2)String   c   =   new   String(&ldquo;xyz&rdquo;);①
+　　String   d   =   new   String(&ldquo;xyz&rdquo;);②
+　　分析：①Class被加载时，"xyz"被作为常量读入，在常量池(constant pool)里创建了一个共享的值为"xyz"的String对象；然后当调用到new String(&ldquo;xyz&rdquo;)的时候，会在堆(heap)里创建这个new   String(&ldquo;xyz&rdquo;)对象;②由于常量池(constant pool)中存在"xyz"所以不再创建"xyz"，然后创建新的new String(&ldquo;xyz&rdquo;)。</p>
 
-<p>Don&rsquo;t guess if your <a href="http://markdownpad.com">hyperlink syntax</a> is correct; LivePreview will show you exactly what your document looks like every time you press a key.</p>
+<p>3)String   s1   =   new   String(&ldquo;xyz&rdquo;);     //创建二个对象(常量池和栈中)，一个引用
+　　String   s2   =   new   String(&ldquo;xyz&rdquo;);     //创建一个对象(栈中)，并且以后每执行一次创建一个对象，一个引用</p>
 
-<h3>Make it your own</h3>
+<p>　　String   s3   =   &ldquo;xyz&rdquo;;     //创建一个对象(常量池中)，一个引用 <br/>
+　　String   s4   =   &ldquo;xyz&rdquo;;     //不创建对象(共享上次常量池中的数据)，只是创建一个新的引用
+4)</p>
 
-<p>Fonts, color schemes, layouts and stylesheets are all 100% customizable so you can turn MarkdownPad into your perfect editor.</p>
+<p>public class TestStr {
+  public static void main(String[] args) {
+    // 以下两条语句创建了1个对象。"凤山"存储在字符串常量池中
+    String str1 = &ldquo;凤山&rdquo;;
+    String str2 = &ldquo;凤山&rdquo;;
+    System.out.println(str1==str2);//true</p>
 
-<h3>A robust editor for advanced Markdown users</h3>
+<pre><code>//以下两条语句创建了3个对象。"天峨"，存储在字符串常量池中，两个new String()对象存储在堆内存中 
+String str3 = new String("天峨"); 
+String str4 = new String("天峨"); 
+System.out.println(str3==str4);//false 
 
-<p>MarkdownPad supports multiple Markdown processing engines, including standard Markdown, Markdown Extra (with Table support) and GitHub Flavored Markdown.</p>
+//以下两条语句创建了1个对象。9是存储在栈内存中 
+int i = 9; 
+int j = 9; 
+System.out.println(i==j);//true 
 
-<p>With a tabbed document interface, PDF export, a built-in image uploader, session management, spell check, auto-save, syntax highlighting and a built-in CSS management interface, there&rsquo;s no limit to what you can do with MarkdownPad.</p>
+//由于没有了装箱，以下两条语句创建了2个对象。两个1对象存储在堆内存中 
+Integer l1 = new Integer(1); 
+Integer k1 = new Integer(1); 
+System.out.println(l1==k1);//false 
+</code></pre>
+
+<p>　　//以下两条语句创建了1个对象。1对象存储在栈内存中。自动装箱时对于值从127之间的值，使用一个实例。
+    Integer l = 20;//装箱
+    Integer k = 20;//装箱
+    System.out.println(l==k);//true
+//以下两条语句创建了2个对象。i1,i2变量存储在栈内存中，两个256对象存储在堆内存中
+    Integer i1 = 256;
+    Integer i2 = 256;
+    System.out.println(i1==i2);//false
+  }
+}</p>
 </div>
 
 
@@ -173,12 +202,12 @@
 
 
 
-<time class='entry-date' datetime='2015-05-18T22:02:47+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:02 pm</span></time>
+<time class='entry-date' datetime='2015-05-25T21:05:49+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:05 pm</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/editor/'>editor</a>
+    <a class='category' href='/blog/categories/java/'>java</a>
   
 </span>
 
@@ -215,14 +244,10 @@
     <ul class="pager">
       
       <li class="previous"><a class="basic-alignment left"
-        href="/blog/2015/05/17/vim-study/" title="Previous Post:
-        linux vim学习">&laquo; linux vim学习</a></li>
+        href="/blog/2015/05/20/cache/" title="Previous Post:
+        cache">&laquo; cache</a></li>
       
       <li><a href="/blog/archives">Blog Archives</a></li>
-      
-      <li class="next"><a class="basic-alignment right" href="/blog/2015/05/20/cache/"
-        title="Next Post: cache">cache
-        &raquo;</a></li>
       
     </ul>
   </footer>
@@ -272,7 +297,7 @@
 
 <section>
 <h2>java工程师<!-- <abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr> --></h2>
-<a href="http://jarvisxiong.github.io/myblog/blog/2015/05/18/markdown-pad/"><!-- <img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://jarvisxiong.github.io/myblog/blog/2015/05/18/markdown-pad/" alt="post-qrcode"> -->
+<a href="http://jarvisxiong.github.io/myblog/blog/2015/05/25/java-string-model/"><!-- <img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://jarvisxiong.github.io/myblog/blog/2015/05/25/java-string-model/" alt="post-qrcode"> -->
 <img src="/images/wechat.png"></a>
 </section>
 
